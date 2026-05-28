@@ -102,6 +102,7 @@ app/
   layout.tsx                       layout raiz da aplicacao
   globals.css                      tokens visuais e estilos globais
   not-found.tsx                    tela para rotas ou cidades inexistentes
+  api/health/route.ts              health check HTTP para Docker, Vercel e monitores externos
   city/[cityId]/page.tsx           valida a cidade pela URL e renderiza o clima no servidor
   city/[cityId]/loading.tsx        estado de carregamento da rota de clima
   city/[cityId]/error.tsx          estado de erro da rota de clima
@@ -135,6 +136,7 @@ assets/
   test-coverage.svg                imagem do relatorio de cobertura usado no README
 
 __tests__/
+  health-route.test.ts             testes do endpoint de health check
   CitySelector.test.tsx            testes do seletor de cidades
   WeatherDetailsView.test.tsx      testes da tela de detalhes do clima
   weather.test.ts                  testes de normalizacao, formatacao, icones e validacao
@@ -200,6 +202,40 @@ Exemplo de log:
 
 Os logs nao incluem a API key nem o payload completo da API externa.
 
+## Health Check
+
+O app expoe um endpoint de liveness em:
+
+```text
+GET /api/health
+```
+
+Resposta esperada:
+
+```json
+{
+  "status": "ok",
+  "service": "tdscompany-weather-app",
+  "timestamp": "2026-05-28T12:00:00.000Z"
+}
+```
+
+Esse endpoint nao chama a WeatherAPI. Ele valida apenas se a aplicacao esta respondendo HTTP, evitando que uma instabilidade temporaria do provedor externo marque o container ou deploy como indisponivel.
+
+No Docker, o `Dockerfile` e o `compose.yaml` usam esse endpoint como health check:
+
+```text
+http://127.0.0.1:3000/api/health
+```
+
+No Vercel, o mesmo endpoint fica disponivel na URL do deploy:
+
+```text
+https://seu-dominio-da-vercel.vercel.app/api/health
+```
+
+Ele pode ser usado por monitores externos como UptimeRobot, Better Stack, Datadog, Grafana Cloud ou New Relic.
+
 ## Rodar Localmente
 
 Instale as dependencias:
@@ -240,6 +276,12 @@ Ou use Docker Compose:
 docker compose up --build
 ```
 
+Para acompanhar o status do health check no Docker Compose:
+
+```bash
+docker compose ps
+```
+
 ## Build De Producao
 
 Crie o build de producao:
@@ -277,6 +319,7 @@ A suite cobre:
 - formatadores;
 - mapeamento de icones;
 - busca de cidades;
+- endpoint de health check;
 - fluxos de sucesso e erro do cliente da WeatherAPI;
 - logs estruturados para falhas da integracao externa;
 - tratamento de `notFound` para cidades inexistentes.
@@ -295,7 +338,6 @@ Resultado atual da cobertura:
 
 ## Possiveis Melhorias Futuras
 
-- adicionar health check HTTP para ambientes orquestrados;
 - permitir unidade Fahrenheit/Celsius como preferencia do usuario;
 - adicionar refresh manual na tela de clima;
 - migrar para API route + TanStack Query se houver necessidade real de comportamento client-side mais interativo.

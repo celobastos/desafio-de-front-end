@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="780" height="500" viewBox="0 0 780 500" role="img" aria-labelledby="title desc">
   <title id="title">Jest test coverage report</title>
-  <desc id="desc">Terminal coverage table showing 97.84 percent statement coverage and 91.66 percent branch coverage.</desc>
+  <desc id="desc">Terminal coverage table showing 97.45 percent statement coverage and 91.66 percent branch coverage.</desc>
   <rect width="780" height="500" fill="#05080c"/>
   <style>
     .line { font: 14px Consolas, "Courier New", monospace; fill: #f5f7fb; }
@@ -28,10 +28,10 @@
   <text class="line" x="652" y="42">Uncovered Line #s</text>
 
   <text class="path" x="8" y="70">All files</text>
-  <text class="ok" x="410" y="70">97.84</text>
+  <text class="ok" x="410" y="70">97.45</text>
   <text class="ok" x="490" y="70">91.66</text>
   <text class="ok" x="560" y="70">100</text>
-  <text class="ok" x="630" y="70">97.67</text>
+  <text class="ok" x="630" y="70">97.7</text>
 
   <text class="path" x="8" y="92">components/CitySelector</text>
   <text class="ok" x="410" y="92">100</text><text class="ok" x="490" y="92">100</text><text class="ok" x="560" y="92">100</text><text class="ok" x="630" y="92">100</text>
