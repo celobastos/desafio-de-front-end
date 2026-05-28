@@ -1,0 +1,116 @@
+.screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--black);
+}
+
+.shell {
+  width: min(100%, 420px);
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.visual {
+  display: grid;
+  place-items: center;
+  margin-bottom: 2px;
+}
+
+.shell h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.message {
+  margin: 0;
+  color: var(--secondary-text);
+  font-size: 0.9rem;
+}
+
+.details {
+  display: grid;
+  gap: 8px;
+}
+
+.details p {
+  margin: 0;
+  color: color-mix(in srgb, var(--secondary-text) 78%, transparent);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 1px solid color-mix(in srgb, var(--blue) 24%, transparent);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin 800ms linear infinite;
+}
+
+.backLink {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  border-radius: 4px;
+  color: var(--secondary-text);
+  font-size: 0.85rem;
+  outline: 0;
+  transition: color 160ms ease;
+}
+
+.backLink:hover,
+.backLink:focus-visible {
+  color: var(--focus);
+}
+
+.backLink:focus-visible {
+  box-shadow: 0 0 0 2px var(--focus);
+}
+
+.actionButton {
+  min-height: 36px;
+  border: 0;
+  border-radius: 4px;
+  padding: 0 14px;
+  background: transparent;
+  color: var(--secondary-text);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  outline: 0;
+  transition: color 160ms ease, box-shadow 160ms ease;
+}
+
+.actionButton:hover,
+.actionButton:focus-visible {
+  color: var(--focus);
+}
+
+.actionButton:focus-visible {
+  box-shadow: 0 0 0 2px var(--focus);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 1.6s;
+  }
+}

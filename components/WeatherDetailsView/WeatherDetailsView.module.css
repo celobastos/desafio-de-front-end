@@ -1,0 +1,115 @@
+.screen {
+  --panel-bg: var(--gray);
+  --forecast-ink: var(--dark-text);
+  --forecast-muted: var(--dark-text);
+  --icon-filter: none;
+  min-height: 100vh;
+  position: relative;
+  display: grid;
+  place-items: stretch center;
+  padding: 0;
+  background: var(--panel-bg);
+  color: var(--forecast-ink);
+}
+
+.screenGood {
+  --panel-bg: var(--blue);
+  --forecast-ink: var(--white-text);
+  --forecast-muted: var(--secondary-text);
+  --icon-filter: brightness(0) invert(1);
+}
+
+.panel {
+  width: min(calc(100vw - 40px), 512px);
+  min-height: min(715px, 100vh);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-content: space-between;
+  justify-content: center;
+  justify-items: center;
+  row-gap: 16px;
+  padding: 24px 18px 18px;
+  text-align: center;
+}
+
+.header,
+.mainWeatherGlyph {
+  grid-column: 1 / -1;
+}
+
+.backLink {
+  position: fixed;
+  left: 12px;
+  top: 10px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 4px;
+  color: var(--forecast-muted);
+  font-size: 1.75rem;
+  font-weight: 200;
+  line-height: 1;
+  outline: 0;
+  transition: color 160ms ease;
+}
+
+.backLink:hover,
+.backLink:focus-visible {
+  color: var(--focus);
+}
+
+.backLink:focus-visible {
+  box-shadow: 0 0 0 2px var(--focus);
+}
+
+.backLink span {
+  font-size: 2.5rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: 0;
+}
+
+.header p {
+  margin: 4px 0 0;
+  font-size: 1.5rem;
+  color: var(--forecast-muted);
+  font-weight: 200;
+}
+
+.mainWeatherGlyph {
+  width: 11rem;
+  height: 11rem;
+  margin-top: -4px;
+  filter: var(--icon-filter);
+}
+
+@media (min-width: 768px) {
+  .screen {
+    place-items: center;
+    padding: 40px;
+  }
+
+  .panel {
+    width: 512px;
+    height: 715px;
+    min-height: 715px;
+    row-gap: 24px;
+    padding: 18px 18px 16px;
+  }
+
+  .backLink {
+    left: 24px;
+    top: 20px;
+  }
+
+  .mainWeatherGlyph {
+    width: 11rem;
+    height: 11rem;
+  }
+}

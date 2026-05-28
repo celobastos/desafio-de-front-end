@@ -1,54 +1,79 @@
-# Desafio de Front-end
+# TDSCompany Weather App
 
-Criar um web app que liste cidades específicas (listadas abaixo) e, após a seleção de alguma por parte do usuário, exiba uma tela de detalhes da cidade escolhida com informações do seu clima através de uma API pública de dados meteorológicos.
+Aplicacao Next.js que exibe o clima atual e a previsao para cidades selecionadas.
 
-## Sugestões de APIs
+## Requisitos
 
-- https://www.openweathermap.org/current
-- https://www.weatherapi.com
+- Node.js 22 ou mais recente para desenvolvimento local
+- Docker para executar em container
+- Uma chave de API do WeatherAPI.com
 
-## Layout
+## Ambiente
 
-- [Link do layout no Figma](https://www.figma.com/design/4lcFZPwbuAxjBiUutFK9Qd)
+Crie um arquivo `.env.local` na raiz do projeto:
 
-## Hospedagem
+```bash
+WEATHER_API_KEY=sua_chave_weatherapi_aqui
+```
 
-O projeto precisa ser publicado numa das duas opções abaixo:
+## Rodar Com Docker
 
-- [Netlify](https://www.netlify.com)
-- [Vercel](https://www.vercel.com)
+Antes de construir a imagem, confira se o Docker Desktop esta aberto e em execucao.
 
-## Requisitos de avaliação
+Construa a imagem:
 
-- Faça um fork deste repositório;
-- As cidades listadas devem ser:
-    - Dallol (NG);
-    - Fairbanks (US);
-    - Londres (GB);
-    - Recife (BR);
-    - Vancouver (CA);
-    - Yakutsk (RU).
-- Implementação de testes unitários;
-- Fidelidade ao layout enviado (estamos enviando o layout mobile e desktop);
-- Frameworks JavaScript opcional (de preferência, nesta ordem 😉):
-    - React com Next.js
-    - React com Vite;
-    - Vue;
-    - Angular.
-- Responsividade atendendo 3 breakpoints:
-    - Smartphone;
-    - Tablet;
-    - Desktop.
+```bash
+docker build -t tdscompany-weather-app .
+```
 
-## Observações
+Rode o container:
 
-- Você deve usar os ícones do layout que melhor se encaixarem em cada condição climática;
-- Considere os horários 3:00, 9:00, 15:00 e 21:00 para as definições das temperaturas de Dawn, Morning, Afternoon, Night, respectivamente.
+```bash
+docker run --rm -p 3000:3000 --env-file .env.local tdscompany-weather-app
+```
 
-## Diferenciais
+Acesse `http://localhost:3000`.
 
-- Rodar a aplicação fazendo o uso de um container do Docker.
+Ou use Docker Compose:
 
-Agora é com você! Faça o fork e responda o nosso contato com o link, ok?
+```bash
+docker compose up --build
+```
 
-Boa sorte!
+## Rodar Localmente
+
+Instale as dependencias:
+
+```bash
+npm ci
+```
+
+Inicie o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+Acesse `http://localhost:3000`.
+
+## Build De Producao
+
+Crie o build de producao:
+
+```bash
+npm run build
+```
+
+Rode o servidor de producao:
+
+```bash
+npm run start
+```
+
+## Testes
+
+Rode a suite de testes:
+
+```bash
+npm test
+```

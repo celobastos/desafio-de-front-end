@@ -1,0 +1,104 @@
+.screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 26px 0;
+  background: var(--black);
+}
+
+.picker {
+  width: min(100%, var(--mobile-grid-width));
+  display: grid;
+  grid-template-columns: repeat(6, var(--mobile-column));
+  justify-content: center;
+  column-gap: var(--mobile-gap);
+  row-gap: 32px;
+  text-align: center;
+  margin-top: 79.5px;
+}
+
+.header,
+.globeIcon,
+.cityGrid {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: 0;
+}
+
+.header p {
+  margin: 4px 0 0;
+  color: var(--secondary-text);
+  font-size: 1.5625rem;
+  font-weight: 200;
+}
+
+.globeIcon {
+  width: 176px;
+  height: 176px;
+  filter: brightness(0) invert(1);
+}
+
+.cityGrid {
+  width: fit-content;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 32px 24px;
+}
+
+.cityLink {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: var(--white-text);
+  font-size: 1.25rem;
+  line-height: 1.2;
+  outline: 0;
+  transition: color 160ms ease, background 160ms ease;
+}
+
+.cityLink:hover,
+.cityLink:focus-visible {
+  color: var(--focus);
+}
+
+.cityLink:focus-visible {
+  box-shadow: 0 0 0 2px var(--focus);
+}
+
+@media (min-width: 768px) {
+  .screen {
+    padding-top: 80px;
+  }
+    .cityGrid {
+    gap: 32px 48px;
+  }
+
+}
+
+@media (min-width: 1024px) {
+  .screen {
+    padding-top: 76px;
+  }
+
+  .picker {
+    width: min(100%, var(--desktop-grid-width));
+    grid-template-columns: repeat(12, var(--desktop-column));
+    column-gap: var(--desktop-gap);
+  }
+
+  .header,
+  .globeIcon,
+  .cityGrid {
+    grid-column: 5 / span 4;
+  }
+}
