@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="780" height="470" viewBox="0 0 780 470" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="500" viewBox="0 0 780 500" role="img" aria-labelledby="title desc">
   <title id="title">Jest test coverage report</title>
-  <desc id="desc">Terminal coverage table showing 98.56 percent statement coverage and 94.38 percent branch coverage.</desc>
-  <rect width="780" height="470" fill="#05080c"/>
+  <desc id="desc">Terminal coverage table showing 97.84 percent statement coverage and 91.66 percent branch coverage.</desc>
+  <rect width="780" height="500" fill="#05080c"/>
   <style>
     .line { font: 14px Consolas, "Courier New", monospace; fill: #f5f7fb; }
     .path { font: 14px Consolas, "Courier New", monospace; fill: #00ff66; font-weight: 700; }
@@ -13,12 +13,12 @@
 
   <line class="grid" x1="0" y1="24" x2="780" y2="24"/>
   <line class="grid" x1="0" y1="50" x2="780" y2="50"/>
-  <line class="grid" x1="0" y1="446" x2="780" y2="446"/>
-  <line class="grid" x1="350" y1="0" x2="350" y2="470"/>
-  <line class="grid" x1="420" y1="0" x2="420" y2="470"/>
-  <line class="grid" x1="500" y1="0" x2="500" y2="470"/>
-  <line class="grid" x1="570" y1="0" x2="570" y2="470"/>
-  <line class="grid" x1="640" y1="0" x2="640" y2="470"/>
+  <line class="grid" x1="0" y1="476" x2="780" y2="476"/>
+  <line class="grid" x1="350" y1="0" x2="350" y2="500"/>
+  <line class="grid" x1="420" y1="0" x2="420" y2="500"/>
+  <line class="grid" x1="500" y1="0" x2="500" y2="500"/>
+  <line class="grid" x1="570" y1="0" x2="570" y2="500"/>
+  <line class="grid" x1="640" y1="0" x2="640" y2="500"/>
 
   <text class="line" x="8" y="42">File</text>
   <text class="line" x="362" y="42">% Stmts</text>
@@ -28,10 +28,10 @@
   <text class="line" x="652" y="42">Uncovered Line #s</text>
 
   <text class="path" x="8" y="70">All files</text>
-  <text class="ok" x="410" y="70">98.56</text>
-  <text class="ok" x="490" y="70">94.38</text>
+  <text class="ok" x="410" y="70">97.84</text>
+  <text class="ok" x="490" y="70">91.66</text>
   <text class="ok" x="560" y="70">100</text>
-  <text class="ok" x="630" y="70">98.43</text>
+  <text class="ok" x="630" y="70">97.67</text>
 
   <text class="path" x="8" y="92">components/CitySelector</text>
   <text class="ok" x="410" y="92">100</text><text class="ok" x="490" y="92">100</text><text class="ok" x="560" y="92">100</text><text class="ok" x="630" y="92">100</text>
@@ -57,20 +57,23 @@
   <text class="ok" x="410" y="268">100</text><text class="ok" x="490" y="268">100</text><text class="ok" x="560" y="268">100</text><text class="ok" x="630" y="268">100</text>
 
   <text class="path" x="8" y="290">lib</text>
-  <text class="ok" x="410" y="290">100</text><text class="ok" x="490" y="290">100</text><text class="ok" x="560" y="290">100</text><text class="ok" x="630" y="290">100</text>
+  <text class="ok" x="410" y="290">88.88</text><text class="warn" x="490" y="290">57.14</text><text class="ok" x="560" y="290">100</text><text class="ok" x="630" y="290">87.5</text>
   <text class="path" x="24" y="312">cities.ts</text>
   <text class="ok" x="410" y="312">100</text><text class="ok" x="490" y="312">100</text><text class="ok" x="560" y="312">100</text><text class="ok" x="630" y="312">100</text>
+  <text class="path" x="24" y="334">server-logger.ts</text>
+  <text class="ok" x="410" y="334">84.61</text><text class="warn" x="490" y="334">57.14</text><text class="ok" x="560" y="334">100</text><text class="ok" x="630" y="334">84.61</text>
+  <text class="miss" x="652" y="334">16,39</text>
 
-  <text class="path" x="8" y="334">lib/weather</text>
-  <text class="ok" x="410" y="334">97.91</text><text class="ok" x="490" y="334">96.29</text><text class="ok" x="560" y="334">100</text><text class="ok" x="630" y="334">97.72</text>
-  <text class="path" x="24" y="356">client.ts</text>
-  <text class="ok" x="410" y="356">100</text><text class="ok" x="490" y="356">100</text><text class="ok" x="560" y="356">100</text><text class="ok" x="630" y="356">100</text>
-  <text class="path" x="24" y="378">formatters.ts</text>
+  <text class="path" x="8" y="356">lib/weather</text>
+  <text class="ok" x="410" y="356">98.05</text><text class="ok" x="490" y="356">96.29</text><text class="ok" x="560" y="356">100</text><text class="ok" x="630" y="356">97.88</text>
+  <text class="path" x="24" y="378">client.ts</text>
   <text class="ok" x="410" y="378">100</text><text class="ok" x="490" y="378">100</text><text class="ok" x="560" y="378">100</text><text class="ok" x="630" y="378">100</text>
-  <text class="path" x="24" y="400">normalize.ts</text>
-  <text class="ok" x="410" y="400">94.73</text><text class="ok" x="490" y="400">87.5</text><text class="ok" x="560" y="400">100</text><text class="ok" x="630" y="400">94.44</text>
-  <text class="miss" x="652" y="400">25</text>
-  <text class="path" x="24" y="422">weatherapi-types.ts</text>
-  <text class="ok" x="410" y="422">94.73</text><text class="ok" x="490" y="422">88.88</text><text class="ok" x="560" y="422">100</text><text class="ok" x="630" y="422">94.73</text>
-  <text class="miss" x="652" y="422">29,49</text>
+  <text class="path" x="24" y="400">formatters.ts</text>
+  <text class="ok" x="410" y="400">100</text><text class="ok" x="490" y="400">100</text><text class="ok" x="560" y="400">100</text><text class="ok" x="630" y="400">100</text>
+  <text class="path" x="24" y="422">normalize.ts</text>
+  <text class="ok" x="410" y="422">94.73</text><text class="ok" x="490" y="422">87.5</text><text class="ok" x="560" y="422">100</text><text class="ok" x="630" y="422">94.44</text>
+  <text class="miss" x="652" y="422">25</text>
+  <text class="path" x="24" y="444">weatherapi-types.ts</text>
+  <text class="ok" x="410" y="444">94.73</text><text class="ok" x="490" y="444">88.88</text><text class="ok" x="560" y="444">100</text><text class="ok" x="630" y="444">94.73</text>
+  <text class="miss" x="652" y="444">29,49</text>
 </svg>

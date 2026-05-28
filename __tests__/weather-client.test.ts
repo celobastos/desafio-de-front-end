@@ -10,6 +10,8 @@ jest.mock("next/navigation", () => ({
 
 const originalWeatherApiKey = process.env.WEATHER_API_KEY;
 const fetchMock = jest.fn();
+const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
 
 function buildWeatherApiPayload() {
   return {
@@ -54,13 +56,21 @@ function buildWeatherApiPayload() {
 beforeEach(() => {
   process.env.WEATHER_API_KEY = "test-api-key";
   fetchMock.mockReset();
+  consoleErrorSpy.mockClear();
+  consoleWarnSpy.mockClear();
   (notFound as jest.Mock).mockClear();
   global.fetch = fetchMock;
 });
 
 afterAll(() => {
   process.env.WEATHER_API_KEY = originalWeatherApiKey;
+  consoleErrorSpy.mockRestore();
+  consoleWarnSpy.mockRestore();
 });
+
+function parseLoggedEvent(spy: jest.SpyInstance) {
+  return JSON.parse(String(spy.mock.calls[0][0]));
+}
 
 describe("weather API client", () => {
   it("loads and normalizes weather data for a known city", async () => {
@@ -90,6 +100,11 @@ describe("weather API client", () => {
     });
 
     expect(fetchMock).not.toHaveBeenCalled();
+    expect(parseLoggedEvent(consoleWarnSpy)).toMatchObject({
+      level: "warn",
+      event: "weather_city_not_found",
+      cityId: "missing",
+    });
   });
 
   it("rejects requests when the API key is missing", async () => {
@@ -101,6 +116,11 @@ describe("weather API client", () => {
     });
 
     expect(fetchMock).not.toHaveBeenCalled();
+    expect(parseLoggedEvent(consoleErrorSpy)).toMatchObject({
+      level: "error",
+      event: "weather_api_key_missing",
+      cityId: "recife",
+    });
   });
 
   it("wraps non-success API responses in a WeatherApiError", async () => {
@@ -112,6 +132,47 @@ describe("weather API client", () => {
     await expect(getWeatherDetails("recife")).rejects.toMatchObject({
       name: "WeatherApiError",
       status: 503,
+    });
+
+    expect(parseLoggedEvent(consoleErrorSpy)).toMatchObject({
+      level: "error",
+      event: "weather_api_response_error",
+      cityId: "recife",
+      provider: "weatherapi",
+      status: 503,
+    });
+  });
+
+  it("logs network request failures", async () => {
+    fetchMock.mockRejectedValue(new Error("socket timeout"));
+
+    await expect(getWeatherDetails("recife")).rejects.toThrow("socket timeout");
+
+    expect(parseLoggedEvent(consoleErrorSpy)).toMatchObject({
+      level: "error",
+      event: "weather_api_request_error",
+      cityId: "recife",
+      provider: "weatherapi",
+      errorName: "Error",
+      errorMessage: "socket timeout",
+    });
+  });
+
+  it("logs invalid provider payloads", async () => {
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: async () => ({}),
+    });
+
+    await expect(getWeatherDetails("recife")).rejects.toBeInstanceOf(WeatherApiError);
+
+    expect(parseLoggedEvent(consoleErrorSpy)).toMatchObject({
+      level: "error",
+      event: "weather_api_payload_invalid",
+      cityId: "recife",
+      provider: "weatherapi",
+      errorName: "WeatherApiError",
+      errorMessage: "Invalid weather API response.",
     });
   });
 });
