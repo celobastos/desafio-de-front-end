@@ -2,7 +2,7 @@
   grid-column: 1 / -1;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, max-content);
+  grid-template-columns: repeat(2, minmax(0, max-content));
   justify-content: center;
   align-items: flex-start;
   gap: 16px 0;
@@ -36,6 +36,20 @@
 
 @media (min-width: 768px) {
   .weatherMetrics {
-    width: 100%;
+    grid-template-columns: repeat(4, minmax(0, max-content));
+  }
+
+  .metricItem:nth-child(n) {
+    padding: 0 18px;
+    border-right: 1px solid color-mix(in srgb, var(--forecast-ink) 24%, transparent);
+  }
+
+  .metricItem:nth-child(n):first-child {
+    padding-left: 0;
+  }
+
+  .metricItem:nth-child(n):last-child {
+    padding-right: 0;
+    border-right: 0;
   }
 }
