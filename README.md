@@ -339,5 +339,3 @@ Resultado atual da cobertura:
 ## Possiveis Melhorias Futuras
 
 - permitir unidade Fahrenheit/Celsius como preferencia do usuario;
-- adicionar refresh manual na tela de clima;
-- migrar para API route + TanStack Query se houver necessidade real de comportamento client-side mais interativo.
