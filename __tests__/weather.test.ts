@@ -1,11 +1,17 @@
 import { cities } from "@/lib/cities";
+import { getCityById } from "@/lib/cities";
 import {
+  formatSignedTemperature,
+  formatTemperature,
+  formatWindSpeedMetersPerSecond,
   getAssetForCondition,
+  getPeriodAsset,
   getWeatherMood,
   normalizeWeatherResponse,
   parseWeatherApiResponse,
   WeatherApiError,
 } from "@/lib/weather";
+import { getWeatherForHour } from "@/lib/weather/normalize";
 
 function buildHours() {
   return Array.from({ length: 24 }, (_, hour) => ({
@@ -76,17 +82,50 @@ describe("weather normalization", () => {
     expect(getAssetForCondition("Partly cloudy", "Night")).toBe("cloud-moon");
     expect(getAssetForCondition("Patchy rain nearby")).toBe("rain");
     expect(getAssetForCondition("Heavy rain")).toBe("heavy-rain");
+    expect(getAssetForCondition("Light drizzle")).toBe("drizzle");
     expect(getAssetForCondition("Blizzard")).toBe("snow");
     expect(getAssetForCondition("Sleet")).toBe("sleet");
+    expect(getAssetForCondition("Ice pellets")).toBe("sleet");
     expect(getAssetForCondition("Hail")).toBe("hail");
     expect(getAssetForCondition("Fog")).toBe("fog");
+    expect(getAssetForCondition("Mist")).toBe("fog");
     expect(getAssetForCondition("Haze")).toBe("haze");
+    expect(getAssetForCondition("Sunny intervals")).toBe("cloud-sun");
+    expect(getAssetForCondition("Overcast")).toBe("cloudy");
+    expect(getAssetForCondition("Cloud cover")).toBe("cloud");
     expect(getAssetForCondition("Thunderstorm with rain")).toBe("lightning-rain");
     expect(getAssetForCondition("Lightning")).toBe("lightning");
   });
 
+  it("maps period weather to the matching icon", () => {
+    expect(getPeriodAsset({ label: "Night", time: "21:00", temperatureC: 18, condition: "Cloudy" })).toBe(
+      "cloud-moon",
+    );
+  });
+
+  it("formats weather values for display", () => {
+    expect(formatTemperature(21.6)).toBe("22\u00B0C");
+    expect(formatSignedTemperature(4.2)).toBe("+4\u00B0");
+    expect(formatSignedTemperature(-4.2)).toBe("-4\u00B0");
+    expect(formatSignedTemperature(0)).toBe("0\u00B0");
+    expect(formatWindSpeedMetersPerSecond(12.6)).toBe("3.50 m/s");
+  });
+
+  it("finds cities by id", () => {
+    expect(getCityById("recife")?.label).toBe("Recife");
+    expect(getCityById("missing")).toBeUndefined();
+  });
+
+  it("rejects missing hourly period data", () => {
+    expect(() => getWeatherForHour(buildHours().slice(0, 3), "09:00")).toThrow(WeatherApiError);
+  });
+
   it("rejects WeatherAPI payloads without forecast data", () => {
     expect(() => parseWeatherApiResponse({})).toThrow(WeatherApiError);
+  });
+
+  it("rejects non-object WeatherAPI payloads", () => {
+    expect(() => parseWeatherApiResponse(null)).toThrow(WeatherApiError);
   });
 
   it("rejects WeatherAPI payloads with an empty forecast day list", () => {
@@ -140,6 +179,66 @@ describe("weather normalization", () => {
                 sunset: "05:07 PM",
               },
               hour: buildHours(),
+            },
+          ],
+        },
+      }),
+    ).toThrow(WeatherApiError);
+  });
+
+  it("rejects WeatherAPI payloads with malformed day entries", () => {
+    expect(() =>
+      parseWeatherApiResponse({
+        location: {
+          name: "Recife",
+          country: "Brazil",
+          localtime: "2026-05-25 13:00",
+        },
+        current: {
+          last_updated: "2026-05-25 12:45",
+          temp_c: 28.6,
+          condition: {
+            text: "Partly cloudy",
+          },
+          wind_kph: 17.2,
+          humidity: 76,
+        },
+        forecast: {
+          forecastday: [null],
+        },
+      }),
+    ).toThrow(WeatherApiError);
+  });
+
+  it("rejects WeatherAPI payloads with malformed hour entries", () => {
+    expect(() =>
+      parseWeatherApiResponse({
+        location: {
+          name: "Recife",
+          country: "Brazil",
+          localtime: "2026-05-25 13:00",
+        },
+        current: {
+          last_updated: "2026-05-25 12:45",
+          temp_c: 28.6,
+          condition: {
+            text: "Partly cloudy",
+          },
+          wind_kph: 17.2,
+          humidity: 76,
+        },
+        forecast: {
+          forecastday: [
+            {
+              day: {
+                maxtemp_c: 31.2,
+                mintemp_c: 24.1,
+              },
+              astro: {
+                sunrise: "05:22 AM",
+                sunset: "05:07 PM",
+              },
+              hour: [null],
             },
           ],
         },

@@ -42,4 +42,10 @@ describe("WeatherDetailsView", () => {
     expect(screen.getByText("Afternoon")).toBeInTheDocument();
     expect(screen.getByText("Night")).toBeInTheDocument();
   });
+
+  it("renders the good-weather visual state", () => {
+    render(<WeatherDetailsView weather={{ ...weather, mood: "good" }} />);
+
+    expect(screen.getByRole("main")).toHaveClass("screenGood");
+  });
 });

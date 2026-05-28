@@ -77,3 +77,16 @@ Rode a suite de testes:
 ```bash
 npm test
 ```
+
+Para verificar a cobertura dos testes:
+
+```bash
+npx jest --coverage
+```
+
+A suite cobre renderizacao dos componentes principais, normalizacao dos dados de clima, formatadores,
+mapeamento de icones, busca de cidades e os fluxos de sucesso e erro do cliente da WeatherAPI.
+
+Resultado atual da cobertura:
+
+![Relatorio de cobertura dos testes](./assets/test-coverage.svg)
